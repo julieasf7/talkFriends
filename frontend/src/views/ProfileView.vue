@@ -15,7 +15,7 @@
                           <div class="cover-body d-flex justify-content-between align-items-center">
                               <div>
                                   <img class="profile-pic" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="profile">
-                                  <span class="profile-name">Amiah Burton</span>
+                                  <span class="profile-name">{{ username }}</span>
                               </div>
                               <div class="d-none d-md-block">
                                   <router-link to="/editProfile" class="btn btn-primary"><i class="las la-edit"></i> Editar perfil</router-link>
@@ -43,7 +43,7 @@
                           </div>
                           <div class="mt-3">
                               <label class="tx-11 font-weight-bold mb-0 text-uppercase">Email:</label>
-                              <p class="text-muted">me@nobleui.com</p>
+                              <p class="text-muted"> {{ email }}</p>
                           </div>
                           <div class="mt-3">
                               <label class="tx-11 font-weight-bold mb-0 text-uppercase">Sitio Web:</label>
@@ -51,8 +51,27 @@
                           </div>
                       </div>
                   </div>
-              </div>
 
+                   <div class="card rounded mt-2">
+                        <div class="card-body">
+                            <h6 class="card-title">Amigos</h6>
+                            
+                            <div class="d-flex justify-content-between mb-2 pb-2 border-bottom" v-for="friends in userFriends" :key="friends.idfriends">
+                                <div class="d-flex align-items-center hover-pointer">
+                                    <img class="img-xs rounded-circle" v-bind:src="'https://bootdey.com/img/Content/avatar/avatar'+ (( count == 7 )? count = 1 : count += 1 )+'.png'" alt="">
+                                    <div class="ml-2">
+                                        {{ friends.fullName }}
+                                    </div>
+                                </div>
+                                <button class="btn btn-icon" v-on:click="deleteFriends(friends.idfriends)">
+                                    <h3><i class="las la-user-minus"></i></h3>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                  
+              </div>
               
               <div class="col-md-8 col-xl-6 middle-wrapper">
                 <div class="row">
@@ -74,100 +93,16 @@
                           <div class="card rounded">
                               <div class="card-body">
                                   <h6 class="card-title">Sugerencias para ti</h6>
-                                  <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
+                                  
+                                  <div class="d-flex justify-content-between mb-2 pb-2 border-bottom" v-for="users in userList" :key="users.userId">
                                       <div class="d-flex align-items-center hover-pointer">
-                                          <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+                                          <img class="img-xs rounded-circle" v-bind:src="'https://bootdey.com/img/Content/avatar/avatar'+ (( count == 7 )? count = 1 : count += 1 )+'.png'" alt="">
                                           <div class="ml-2">
-                                              Mike Popescu
+                                              {{ users.fullName }}
                                           </div>
                                       </div>
-                                      <button class="btn btn-icon">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus" data-toggle="tooltip" title="" data-original-title="Connect">
-                                              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                              <circle cx="8.5" cy="7" r="4"></circle>
-                                              <line x1="20" y1="8" x2="20" y2="14"></line>
-                                              <line x1="23" y1="11" x2="17" y2="11"></line>
-                                          </svg>
-                                      </button>
-                                  </div>
-                                  <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
-                                      <div class="d-flex align-items-center hover-pointer">
-                                          <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                                          <div class="ml-2">
-                                              Mike Popescu
-                                          </div>
-                                      </div>
-                                      <button class="btn btn-icon">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus" data-toggle="tooltip" title="" data-original-title="Connect">
-                                              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                              <circle cx="8.5" cy="7" r="4"></circle>
-                                              <line x1="20" y1="8" x2="20" y2="14"></line>
-                                              <line x1="23" y1="11" x2="17" y2="11"></line>
-                                          </svg>
-                                      </button>
-                                  </div>
-                                  <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
-                                      <div class="d-flex align-items-center hover-pointer">
-                                          <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="">
-                                          <div class="ml-2">
-                                              Mike Popescu
-                                          </div>
-                                      </div>
-                                      <button class="btn btn-icon">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus" data-toggle="tooltip" title="" data-original-title="Connect">
-                                              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                              <circle cx="8.5" cy="7" r="4"></circle>
-                                              <line x1="20" y1="8" x2="20" y2="14"></line>
-                                              <line x1="23" y1="11" x2="17" y2="11"></line>
-                                          </svg>
-                                      </button>
-                                  </div>
-                                  <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
-                                      <div class="d-flex align-items-center hover-pointer">
-                                          <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="">
-                                          <div class="ml-2">
-                                              Mike Popescu
-                                          </div>
-                                      </div>
-                                      <button class="btn btn-icon">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus" data-toggle="tooltip" title="" data-original-title="Connect">
-                                              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                              <circle cx="8.5" cy="7" r="4"></circle>
-                                              <line x1="20" y1="8" x2="20" y2="14"></line>
-                                              <line x1="23" y1="11" x2="17" y2="11"></line>
-                                          </svg>
-                                      </button>
-                                  </div>
-                                  <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
-                                      <div class="d-flex align-items-center hover-pointer">
-                                          <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-                                          <div class="ml-2">
-                                              Mike Popescu
-                                          </div>
-                                      </div>
-                                      <button class="btn btn-icon">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus" data-toggle="tooltip" title="" data-original-title="Connect">
-                                              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                              <circle cx="8.5" cy="7" r="4"></circle>
-                                              <line x1="20" y1="8" x2="20" y2="14"></line>
-                                              <line x1="23" y1="11" x2="17" y2="11"></line>
-                                          </svg>
-                                      </button>
-                                  </div>
-                                  <div class="d-flex justify-content-between">
-                                      <div class="d-flex align-items-center hover-pointer">
-                                          <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-                                          <div class="ml-2">
-                                              Mike Popescu
-                                          </div>
-                                      </div>
-                                      <button class="btn btn-icon">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus" data-toggle="tooltip" title="" data-original-title="Connect">
-                                              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                              <circle cx="8.5" cy="7" r="4"></circle>
-                                              <line x1="20" y1="8" x2="20" y2="14"></line>
-                                              <line x1="23" y1="11" x2="17" y2="11"></line>
-                                          </svg>
+                                      <button class="btn btn-icon" v-on:click="addUser(users.userId)">
+                                          <h2><i class="las la-user-plus"></i></h2>
                                       </button>
                                   </div>
 
@@ -176,7 +111,6 @@
                       </div>
                   </div>
               </div>
-              <!-- right wrapper end -->
           </div>
       </div>
       </div>
@@ -191,14 +125,70 @@
 
   export default {
     name: "profile",
-      components: {
+    data() {
+        return {
+            username     : this.$store.getters.username,
+            email        : this.$store.getters.email,
+            userList     : null,
+            userFriends  : null,
+            count        : 0
+        }
+    },
+    components: {
         Form,
         Field,
         ErrorMessage,
         HeaderComponent,
         UserActivitiesComponent
     },
+    created(){
+        this.getListUsers()
+        this.getListFriends()
+    },
     methods: {
+        getListUsers(){
+            api.post(
+                '/users/listUsers', 
+                {
+                    userId : this.$store.getters.loggedId
+                }
+            ).then(result => {
+                this.userList = result.data
+            }) 
+        },
+        getListFriends(){
+            api.post(
+                '/users/listFriends', 
+                {
+                    userId : this.$store.getters.loggedId
+                }
+            ).then(result => {
+                this.userFriends = result.data
+            }) 
+        },
+        deleteFriends(value){
+            api.post(
+                '/users/deleteFriends', 
+                {
+                    idFriends : value
+                }
+            ).then(result => {
+                this.getListUsers()
+                this.getListFriends()
+            }) 
+        },
+        addUser(value){
+            api.post(
+                '/users/addUser', 
+                {
+                    userId    : this.$store.getters.loggedId,
+                    userIdAdd : value
+                }
+            ).then(result => {
+                this.getListUsers()
+                this.getListFriends()
+            })
+        },
         onSubmit(values) {
             api.post('/users/register', values).then(result => {
                 if(result.data.token) {
@@ -207,7 +197,7 @@
                     this.$store.commit('setUsername', result.data.username)
                     this.$router.push('/home')
                 } else if(result.data.error){
-                    alert(result.data.error);
+                    alert(result.data.error)
                 }
             }) 
         },

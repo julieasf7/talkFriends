@@ -59,6 +59,7 @@
                         this.$store.commit('setToken', result.data.token)
                         this.$store.commit('setId', result.data.id)
                         this.$store.commit('setUsername', result.data.username)
+                        this.$store.commit('setEmail', result.data.email)
                         this.$router.push('/home')
                     } else if(result.data.error){
                         alert(result.data.error);

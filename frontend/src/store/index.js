@@ -6,7 +6,8 @@ export default createStore({
   state: {
     token: null,
     id: null,
-    username: null
+    username: null,
+    email: null
   },
   getters: {
     token: state => {
@@ -17,6 +18,9 @@ export default createStore({
     },
     username: state => {
       return state.username
+    },
+    email: state => {
+      return state.email
     }
   },
   mutations: {
@@ -28,6 +32,9 @@ export default createStore({
     },
     setUsername(state, username) {
       state.username = username
+    },
+    setEmail(state, email) {
+      state.email = email
     }
   },
   actions: {
