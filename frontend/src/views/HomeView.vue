@@ -4,7 +4,7 @@
     <HeaderComponent></HeaderComponent>
     
     <div class='row p-5 mt-5'>
-      <UserActivitiesComponent></UserActivitiesComponent> 
+      <UserActivitiesComponent  type="home"></UserActivitiesComponent> 
     </div>
   
   </div>

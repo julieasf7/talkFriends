@@ -33,7 +33,9 @@ module.exports = (app, connection, protectedRoute) => {
                 if (err) throw err
         
                 var userData = {
-                    email: req.body.email
+                    id       : result.insertId,
+                    username : req.body.fullName,
+                    email    : req.body.email
                 }
         
                 jwt.sign(userData, 'secretKey', { }, (err, token) => {
@@ -44,7 +46,7 @@ module.exports = (app, connection, protectedRoute) => {
         })      
     })
 
-    app.post('/api/users/listUsers', protectedRoute, (req, res) => {
+    app.post('/api/users/listUsers',  (req, res) => {
       connection.query(
           `SELECT 
           a.userId, 
@@ -64,7 +66,7 @@ module.exports = (app, connection, protectedRoute) => {
       })      
     })
 
-    app.post('/api/users/listFriends', protectedRoute, (req, res) => {
+    app.post('/api/users/listFriends',  (req, res) => {
       connection.query(
           `SELECT 
           a.idfriends,
@@ -83,7 +85,7 @@ module.exports = (app, connection, protectedRoute) => {
       })      
     })
 
-    app.post('/api/users/addUser', protectedRoute, (req, res) => {
+    app.post('/api/users/addUser',  (req, res) => {
       connection.query(`INSERT INTO friends (userId, userFriendId) VALUES (${req.body.userId}, ${req.body.userIdAdd})`, (err, result) => {
           if(err) throw err
       
@@ -92,7 +94,7 @@ module.exports = (app, connection, protectedRoute) => {
       })      
     })
 
-    app.post('/api/users/deleteFriends', protectedRoute, (req, res) => {
+    app.post('/api/users/deleteFriends',  (req, res) => {
       connection.query(`DELETE FROM friends WHERE idfriends = ${req.body.idFriends}`, (err, result) => {
           if(err) throw err
       

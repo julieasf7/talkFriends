@@ -75,15 +75,20 @@
               
               <div class="col-md-8 col-xl-6 middle-wrapper">
                 <div class="row">
-                  <Form @submit="onSubmit">
+                  <Form @submit="addPost">
+                    <div class="form-group pb-2">
+                        <div class="alert alert-info" role="alert" v-show="message">
+                            {{message}}
+                        </div>
+                    </div>
                     <div class="form-group pb-2">
                         <label>Que estas pensando?</label>
-                        <Field type="text" class="form-control" name="activity" :rules="validateRequire" />
+                        <Field type="text" class="form-control" name="activity" :rules="validateRequire" v-model="activity"/>
                         <ErrorMessage name="activity" class="text-danger"/>
                     </div>
                     <button type="submit" class="btn btn-primary m-2">Publicar</button>
                   </Form>
-                  <UserActivitiesComponent></UserActivitiesComponent>
+                  <UserActivitiesComponent type="profile"></UserActivitiesComponent>
                 </div>
               </div>
 
@@ -131,6 +136,8 @@
             email        : this.$store.getters.email,
             userList     : null,
             userFriends  : null,
+            activity     : null,
+            message      : null,
             count        : 0
         }
     },
@@ -189,17 +196,18 @@
                 this.getListFriends()
             })
         },
-        onSubmit(values) {
-            api.post('/users/register', values).then(result => {
-                if(result.data.token) {
-                    this.$store.commit('setToken', result.data.token)
-                    this.$store.commit('setId', result.data.id)
-                    this.$store.commit('setUsername', result.data.username)
-                    this.$router.push('/home')
-                } else if(result.data.error){
-                    alert(result.data.error)
+        addPost(value, actions){
+            this.message = ""
+            api.post(
+                '/post/addPost', 
+                {
+                    userId      : this.$store.getters.loggedId,
+                    description : value.activity
                 }
-            }) 
+            ).then(result => {
+                 actions.setFieldValue('activity', '');
+                 this.message = "Post Generado. Por favor, espere un momento para visualizarlo en su perfil"
+            })
         },
         validateRequire(value){
             if (!value) {

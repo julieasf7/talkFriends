@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 
 module.exports = (app, connection, protectedRoute) => {
 
-    app.post('/api/friends/listFriends', protectedRoute, (req, res) => {
+    app.post('/api/friends/listFriends',  (req, res) => {
       connection.query(
           `SELECT 
           a.idfriends,
@@ -22,7 +22,7 @@ module.exports = (app, connection, protectedRoute) => {
       })      
     })
 
-    app.post('/api/friends/addFriends', protectedRoute, (req, res) => {
+    app.post('/api/friends/addFriends',  (req, res) => {
       connection.query(`INSERT INTO friends (userId, userFriendId) VALUES (${req.body.userId}, ${req.body.userIdAdd})`, (err, result) => {
           if(err) throw err
       
@@ -31,7 +31,7 @@ module.exports = (app, connection, protectedRoute) => {
       })      
     })
 
-    app.post('/api/friends/deleteFriends', protectedRoute, (req, res) => {
+    app.post('/api/friends/deleteFriends',  (req, res) => {
       connection.query(`DELETE FROM friends WHERE idfriends = ${req.body.idFriends}`, (err, result) => {
           if(err) throw err
       
