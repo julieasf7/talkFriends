@@ -101,7 +101,7 @@
                                               {{ users.fullName }}
                                           </div>
                                       </div>
-                                      <button class="btn btn-icon" v-on:click="addUser(users.userId)">
+                                      <button class="btn btn-icon" v-on:click="addFriends(users.userId)">
                                           <h2><i class="las la-user-plus"></i></h2>
                                       </button>
                                   </div>
@@ -158,7 +158,7 @@
         },
         getListFriends(){
             api.post(
-                '/users/listFriends', 
+                '/friends/listFriends', 
                 {
                     userId : this.$store.getters.loggedId
                 }
@@ -168,7 +168,7 @@
         },
         deleteFriends(value){
             api.post(
-                '/users/deleteFriends', 
+                '/friends/deleteFriends', 
                 {
                     idFriends : value
                 }
@@ -177,9 +177,9 @@
                 this.getListFriends()
             }) 
         },
-        addUser(value){
+        addFriends(value){
             api.post(
-                '/users/addUser', 
+                '/friends/addFriends', 
                 {
                     userId    : this.$store.getters.loggedId,
                     userIdAdd : value
