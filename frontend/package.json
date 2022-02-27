@@ -16,7 +16,8 @@
     "vee-validate": "^4.5.9",
     "vue": "^3.2.31",
     "vue-router": "^4.0.3",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

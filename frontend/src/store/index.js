@@ -1,5 +1,7 @@
 import { createStore } from 'vuex'
 
+import createPersistedState from "vuex-persistedstate"
+
 export default createStore({
   state: {
     token: null,
@@ -31,5 +33,6 @@ export default createStore({
   actions: {
   },
   modules: {
-  }
+  },
+  plugins: [createPersistedState()],
 })

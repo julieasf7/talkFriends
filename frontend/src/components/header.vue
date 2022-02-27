@@ -12,6 +12,9 @@
                 <li class="nav-item">
                     <router-link to="/profile" class="nav-link">Perfil</router-link>
                 </li>
+                <li class="nav-item">
+                    <a href="#" v-on:click="logout" class="nav-link">Cerrar sesion</a>
+                </li>
             </ul>
             </div>
         </nav>
@@ -20,6 +23,14 @@
 
 <script>
 export default {
-    name: "HeaderComponent"
+    name    : "HeaderComponent",
+    methods : {
+        logout(){
+            this.$store.commit('setToken', null)
+            this.$store.commit('setId', null)
+            this.$store.commit('setUsername', null)
+            this.$router.push('/')
+        }
+    } 
 }
 </script>

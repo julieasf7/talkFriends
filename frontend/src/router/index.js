@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store'
+
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import HomeView from '../views/HomeView.vue'
@@ -32,5 +34,14 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const protectedRoutes = ["/home","/profile", "/editProfile"]
+  if(protectedRoutes.includes(to.path) && !store.getters.token)
+    next('/')
+  else
+    next()
+})
+
 
 export default router
