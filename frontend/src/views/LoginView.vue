@@ -10,6 +10,11 @@
                         <h1><i class="las la-users"></i> TalkFriends</h1>
                     </div>
                     <div class="form-group pb-2">
+                        <div class="alert alert-danger" role="alert" v-show="error">
+                            {{error}}
+                        </div>
+                    </div>
+                    <div class="form-group pb-2">
                         <label>Email</label>
                         <Field type="email" class="form-control" name="email" :rules="validateEmail" />
                         <ErrorMessage name="email" class="text-danger"/>
@@ -32,6 +37,11 @@
     import api from '@/api.js'
 
     export default {
+        data() {
+            return {
+                error: false,
+            }
+        },
         components: {
             Form,
             Field,
@@ -41,12 +51,13 @@
             onSubmit(values) {
                 api.post('/users/login', values).then(result => {
                     if(result.data.token) {
+                        this.error = false;
                         this.$store.commit('setToken', result.data.token)
                         this.$store.commit('setId', result.data.id)
                         this.$store.commit('setUsername', result.data.username)
                         this.$router.push('/home')
                     } else if(result.data.error){
-                        alert(result.data.error);
+                        this.error = result.data.error;
                     }
                 }) 
             },
