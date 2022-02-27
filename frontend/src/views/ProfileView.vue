@@ -32,14 +32,14 @@
                           <div class="d-flex align-items-center justify-content-between mb-2">
                               <h6 class="card-title mb-0">Acerca de mi</h6>
                           </div>
-                          <p>Hi! I'm Amiah the Senior UI Designer at Vibrant. We hope you enjoy the design and quality of Social.</p>
+                          <p>{{ about }}</p>
                           <div class="mt-3">
                               <label class="tx-11 font-weight-bold mb-0 text-uppercase">Fecha de nacimiento:</label>
-                              <p class="text-muted">November 15, 2015</p>
+                              <p class="text-muted">{{ date }}</p>
                           </div>
                           <div class="mt-3">
                               <label class="tx-11 font-weight-bold mb-0 text-uppercase">Donde vive:</label>
-                              <p class="text-muted">New York, USA</p>
+                              <p class="text-muted">{{ live }}</p>
                           </div>
                           <div class="mt-3">
                               <label class="tx-11 font-weight-bold mb-0 text-uppercase">Email:</label>
@@ -47,7 +47,7 @@
                           </div>
                           <div class="mt-3">
                               <label class="tx-11 font-weight-bold mb-0 text-uppercase">Sitio Web:</label>
-                              <p class="text-muted">www.nobleui.com</p>
+                              <p class="text-muted">{{ site }}</p>
                           </div>
                       </div>
                   </div>
@@ -138,6 +138,11 @@
             userFriends  : null,
             activity     : null,
             message      : null,
+            about        : null,
+            numProfile   : null,
+            date         : null,
+            live         : null,
+            site         : null,
             count        : 0
         }
     },
@@ -151,8 +156,27 @@
     created(){
         this.getListUsers()
         this.getListFriends()
+        this.getProfile()
     },
     methods: {
+        getProfile() {
+            api.post(
+                '/profile/getInfo', 
+                {
+                    userId : this.$store.getters.loggedId
+                }
+            ).then(result => {
+                if(result.data) {
+                    this.about      = result.data.about
+                    this.numProfile = result.data.idprofile
+                    this.date       = result.data.birthdayDate
+                    this.live       = result.data.live
+                    this.site       = result.data.web
+                } else if(result.data.error){
+                    alert(result.data.error);
+                }
+            }) 
+        },
         getListUsers(){
             api.post(
                 '/users/listUsers', 
