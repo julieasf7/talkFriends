@@ -16,7 +16,7 @@
             </ul>
         
             <!-- Comments -->
-            <CommentsComponent v-bind:post="post.idpost"></CommentsComponent>
+            <CommentsComponent :key="comments" v-bind:post="post.idpost"></CommentsComponent>
         </div>
     </div>
     </div>
@@ -37,7 +37,8 @@ export default {
     },
     data() {
         return {
-            postList: null
+            postList: null,
+            comments: true
         }
     },
     components: {
@@ -47,7 +48,7 @@ export default {
         this.getPost()
     },
     mounted(){ 
-        setTimeout(() => this.getPost(), 30000)
+        setTimeout(function () { this.comments = this.comments? false:true }.bind(this), 40000)
     },
     methods: {
         getPost(){

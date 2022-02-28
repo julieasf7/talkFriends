@@ -77,18 +77,13 @@
                 <div class="row">
                   <Form @submit="addPost">
                     <div class="form-group pb-2">
-                        <div class="alert alert-info" role="alert" v-show="message">
-                            {{message}}
-                        </div>
-                    </div>
-                    <div class="form-group pb-2">
                         <label>Que estas pensando?</label>
                         <Field type="text" class="form-control" name="activity" :rules="validateRequire" v-model="activity"/>
                         <ErrorMessage name="activity" class="text-danger"/>
                     </div>
                     <button type="submit" class="btn btn-primary m-2">Publicar</button>
                   </Form>
-                  <UserActivitiesComponent type="profile"></UserActivitiesComponent>
+                  <UserActivitiesComponent :key="activites" type="profile"></UserActivitiesComponent>
                 </div>
               </div>
 
@@ -137,12 +132,12 @@
             userList     : null,
             userFriends  : null,
             activity     : null,
-            message      : null,
             about        : null,
             numProfile   : null,
             date         : null,
             live         : null,
             site         : null,
+            activites    : true,
             count        : 0
         }
     },
@@ -221,7 +216,6 @@
             })
         },
         addPost(value, actions){
-            this.message = ""
             api.post(
                 '/post/addPost', 
                 {
@@ -229,8 +223,8 @@
                     description : value.activity
                 }
             ).then(result => {
-                 actions.setFieldValue('activity', '');
-                 this.message = "Post Generado. Por favor, espere un momento para visualizarlo en su perfil"
+                 actions.setFieldValue('activity', '')
+                 this.activites = this.activites? false:true;
             })
         },
         validateRequire(value){

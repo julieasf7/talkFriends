@@ -14,15 +14,19 @@
             <a href="#" title="#" class="image">
                 <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="#" width="44" height="44">
             </a>
+            <Form @submit="addComment">
             <div class="c">
-                <textarea rows="1" placeholder="Ingrese su comentario" v-model="comment" class="form-control js-autogrow" style="overflow: hidden; word-wrap: break-word; height: 42px;"></textarea>
-                <button v-on:click="addComment(post,comment)" class="btn btn-sm btn-primary">Comentar</button>                    
+                <Field type="comment" v-model="commentText" placeholder="Ingrese su comentario" class="form-control js-autogrow" name="comment" :rules="validateRequire" />
+                <ErrorMessage name="comment" class="text-danger"/>
+                <button type="submit" class="btn btn-sm btn-primary">Comentar</button>                    
             </div>
+            </Form>
         </li>
     </ul> 
 </template>
 
 <script>
+import { Form, Field, ErrorMessage } from 'vee-validate';
 import api from '@/api.js'
 
 export default {
@@ -33,10 +37,15 @@ export default {
             default : 0
         },
     },
+     components: {
+        Form,
+        Field,
+        ErrorMessage,
+    },
     data() {
         return {
             commentList : null,
-            comment     : null,
+            commentText : null,
             count       : 0
         }
     },
@@ -54,21 +63,26 @@ export default {
                 this.commentList = result.data
             }) 
         },
-        addComment(idPost,comment){
-            if(comment){
-                api.post(
-                    '/comments/addComment', 
-                    {
-                        userId  : this.$store.getters.loggedId,
-                        idPost  : idPost,
-                        comment : comment
-                    }
-                ).then(result => {
-                    this.comment = ''
-                    this.getComment()
-                }) 
+        addComment(values, actions){
+            api.post(
+                '/comments/addComment', 
+                {
+                    userId  : this.$store.getters.loggedId,
+                    idPost  : this.post,
+                    comment : values.comment
+                }
+            ).then(result => {
+                actions.setFieldValue('commentText', '')
+                this.getComment()
+            }) 
+        },
+        validateRequire(value){
+            if (!value) {
+                return 'Este campo es requerido';
             }
-        }
+
+            return true;
+        },
     }
 }
 </script>
