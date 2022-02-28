@@ -86,16 +86,6 @@
                     }
                 })
             }
-            /*api.post('profile/addProfile', values).then(result => {
-                if(result.data.token) {
-                    this.$store.commit('setToken', result.data.token)
-                    this.$store.commit('setId', result.data.id)
-                    this.$store.commit('setUsername', result.data.username)
-                    this.$router.push('/home')
-                } else if(result.data.error){
-                    alert(result.data.error);
-                }
-            }) */
         },
         getProfile() {
             api.post(
