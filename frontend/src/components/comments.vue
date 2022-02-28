@@ -17,7 +17,7 @@
             <Form @submit="addComment">
             <div class="c">
                 <Field type="comment" v-model="commentText" placeholder="Ingrese su comentario" class="form-control js-autogrow" name="comment" :rules="validateRequire" />
-                <ErrorMessage name="comment" class="text-danger"/>
+                <ErrorMessage name="comment" class="text-danger"/><br>
                 <button type="submit" class="btn btn-sm btn-primary">Comentar</button>                    
             </div>
             </Form>
