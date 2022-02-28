@@ -1,8 +1,19 @@
+/**
+ * post
+ * 
+ * Contiene todos los procesos al post de la aplicacion
+ * 
+ */
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 module.exports = (app, connection, protectedRoute) => {
 
+  /**
+   * getPostProfile
+   * 
+   * Permite consultar los post realizados por un usuario
+   */
     app.post('/api/post/getPostProfile',  (req, res) => {
       connection.query(
           `SELECT  
@@ -24,6 +35,11 @@ module.exports = (app, connection, protectedRoute) => {
       })      
     })
 
+    /**
+     * getPostHome
+     * 
+     * Permte consultar los posts de los amigos de un usuario
+     */
     app.post('/api/post/getPostHome',  (req, res) => {
       connection.query(
           `SELECT  a.idpost, 
@@ -46,6 +62,11 @@ module.exports = (app, connection, protectedRoute) => {
       })      
     })
 
+    /**
+     * addPost
+     * 
+     * Permite el registro de un post
+     */
     app.post('/api/post/addPost',  (req, res) => {
       connection.query(`INSERT INTO post (description, idUser) VALUES ('${req.body.description}', ${req.body.userId})`, (err, result) => {
           if(err) throw err

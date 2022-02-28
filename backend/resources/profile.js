@@ -1,8 +1,19 @@
+/**
+ * profile
+ * 
+ * Contiene todos los procesos relacionados al perfil del usuario
+ * 
+ */
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 module.exports = (app, connection, protectedRoute) => {
 
+  /**
+   * getInfo
+   * 
+   * Permite consultar la informacion del perfil del usuario
+   */
     app.post('/api/profile/getInfo',  (req, res) => {
       connection.query(
           `SELECT  idprofile, 
@@ -20,6 +31,11 @@ module.exports = (app, connection, protectedRoute) => {
       })      
     })
 
+    /**
+     * addProfile
+     * 
+     * Permite registrar la informacion del usuario
+     */
     app.post('/api/profile/addProfile',  (req, res) => {
       connection.query(`INSERT INTO profile (userId, about, birthdayDate, live, web) VALUES ('${req.body.user}','${req.body.about}', '${req.body.date}', '${req.body.live}', '${req.body.site}')`, (err, result) => {
           if(err) throw err
@@ -29,6 +45,11 @@ module.exports = (app, connection, protectedRoute) => {
       })      
     })
 
+    /**
+     * updateProfile
+     * 
+     * Permite actualiza la informacion de perfil del usuario
+     */
     app.post('/api/profile/updateProfile',  (req, res) => {
       connection.query(`
         UPDATE profile SET 

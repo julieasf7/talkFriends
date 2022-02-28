@@ -1,7 +1,20 @@
+/**
+ * users
+ * 
+ * Contiene todos los procesos relacionados al usuario
+ * 
+ */
+
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 module.exports = (app, connection, protectedRoute) => {
+
+    /**
+     * login
+     * 
+     * Permite realizar el login a la aplicacion
+     */
     app.post('/api/users/login', (req, res) => {
         connection.query(`SELECT userId, fullName, email, password from users where email = '${req.body.email}'`, (err, result) => {
             if(err) throw err
@@ -27,6 +40,11 @@ module.exports = (app, connection, protectedRoute) => {
         })      
     })
     
+    /**
+     * register
+     * 
+     * Permite registrar un nuevo usuario
+     */
     app.post('/api/users/register', (req, res) => {
         bcrypt.hash(req.body.password, 10, (err, password) => {
             connection.query(`INSERT INTO users (fullName, email, password) VALUES ('${req.body.fullName}', '${req.body.email}','${password}')`, (err, result) => {
@@ -46,6 +64,11 @@ module.exports = (app, connection, protectedRoute) => {
         })      
     })
 
+    /**
+     * listUsers
+     * 
+     * Permite consultar la lista de usuarios
+     */
     app.post('/api/users/listUsers',  (req, res) => {
       connection.query(
           `SELECT 
@@ -62,43 +85,6 @@ module.exports = (app, connection, protectedRoute) => {
           if(err) throw err
       
           return res.json(result)
-      
-      })      
-    })
-
-    app.post('/api/users/listFriends',  (req, res) => {
-      connection.query(
-          `SELECT 
-          a.idfriends,
-          b.userId, 
-            b.fullName, 
-            b.email
-        FROM friends a
-        LEFT JOIN users b
-          ON b.userId = a.userFriendId
-        WHERE a.userId = ${req.body.userId}`, 
-        (err, result) => {
-          if(err) throw err
-      
-          return res.json(result)
-      
-      })      
-    })
-
-    app.post('/api/users/addUser',  (req, res) => {
-      connection.query(`INSERT INTO friends (userId, userFriendId) VALUES (${req.body.userId}, ${req.body.userIdAdd})`, (err, result) => {
-          if(err) throw err
-      
-          return res.json({ msg: "Informacion insertada" })
-      
-      })      
-    })
-
-    app.post('/api/users/deleteFriends',  (req, res) => {
-      connection.query(`DELETE FROM friends WHERE idfriends = ${req.body.idFriends}`, (err, result) => {
-          if(err) throw err
-      
-          return res.json({ msg: "Registro eliminado" })
       
       })      
     })
